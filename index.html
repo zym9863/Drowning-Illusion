@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>悬溺幻境 - Drowning Illusion</title>
+    <meta name="description" content="通过鼠标与场景互动，体验情感的视觉化。让粒子随着你的心境流淌，感受数字与情感的交融。">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+</head>
+<body>
+    <div id="info">
+        <h1>悬溺幻境</h1>
+        <p>通过鼠标与场景互动，体验情感视觉化。让粒子随着心境流淌，感受数字与情感的交融。</p>
+        <div id="controls">
+            <label for="mood-select">🎨 心绪调色板</label>
+            <select id="mood-select">
+                <option value="default">🌌 默认 - 纯净空间</option>
+                <option value="serene">💙 宁静 - 深海冥想</option>
+                <option value="turbulent">🔥 汹涌 - 炽热激流</option>
+                <option value="ethereal">💜 空灵 - 虚无缥缈</option>
+            </select>
+            <button id="generate-animation">
+                <span class="button-text">✨ 生成动画</span>
+            </button>
+        </div>
+        <div id="stats">
+            <div class="stat-item">
+                <span class="stat-label">粒子数量</span>
+                <span class="stat-value" id="particle-count">5,000</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">当前心境</span>
+                <span class="stat-value" id="current-mood">默认</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 性能监控面板 -->
+    <div id="performance-panel">
+        <div class="perf-item">
+            <span class="perf-label">FPS</span>
+            <span class="perf-value" id="fps-counter">60</span>
+        </div>
+    </div>
+
+    <!-- 帮助提示 -->
+    <div id="help-tooltip">
+        <div class="tooltip-content">
+            <h3>🎮 操作指南</h3>
+            <ul>
+                <li><strong>鼠标移动</strong> - 影响粒子运动</li>
+                <li><strong>滚轮/触摸</strong> - 缩放视角</li>
+                <li><strong>拖拽</strong> - 旋转视角</li>
+                <li><strong>切换心境</strong> - 体验不同视觉效果</li>
+            </ul>
+        </div>
+        <button id="help-toggle">?</button>
+    </div>
+
+    <canvas id="c"></canvas>
+    
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.164.1/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.164.1/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
