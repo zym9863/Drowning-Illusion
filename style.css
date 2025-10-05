@@ -91,10 +91,11 @@ body::before {
 
 #info p {
     font-size: 0.95em;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85);
     margin-bottom: 20px;
     font-weight: 300;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 #controls {
@@ -103,11 +104,12 @@ body::before {
 
 #controls label {
     display: block;
-    margin-bottom: 8px;
-    font-size: 0.9em;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.9);
-    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+    font-size: 0.92em;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: 0.03em;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 #controls select,
@@ -205,8 +207,9 @@ body::before {
 
 .stat-label {
     font-size: 0.85em;
-    color: rgba(255, 255, 255, 0.7);
-    font-weight: 400;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .stat-value {
@@ -260,10 +263,12 @@ body::before {
 }
 
 .perf-label {
-    font-size: 0.8em;
-    color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 4px;
-    font-weight: 500;
+    font-size: 0.82em;
+    color: rgba(255, 255, 255, 0.65);
+    margin-bottom: 5px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
 .perf-value {
@@ -348,10 +353,11 @@ body::before {
 }
 
 .tooltip-content h3 {
-    margin: 0 0 15px 0;
-    font-size: 1.1em;
+    margin: 0 0 16px 0;
+    font-size: 1.15em;
     color: white;
-    font-weight: 600;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(140, 119, 218, 0.3);
 }
 
 .tooltip-content ul {
@@ -361,10 +367,15 @@ body::before {
 }
 
 .tooltip-content li {
-    margin-bottom: 10px;
-    font-size: 0.9em;
-    color: rgba(255, 255, 255, 0.8);
-    line-height: 1.4;
+    margin-bottom: 12px;
+    font-size: 0.92em;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+    transition: color 0.2s ease;
+}
+
+.tooltip-content li:hover {
+    color: rgba(255, 255, 255, 1);
 }
 
 .tooltip-content strong {
@@ -427,7 +438,7 @@ body::before {
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
     }
     to {
         opacity: 1;
@@ -435,8 +446,27 @@ body::before {
     }
 }
 
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 #info {
-    animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#performance-panel {
+    animation: fadeInRight 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s backwards;
+}
+
+#help-tooltip {
+    animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.4s backwards;
 }
 
 /* 滚动条样式 */
