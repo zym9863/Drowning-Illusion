@@ -36,6 +36,9 @@ const moodPalettes = {
 
 let currentMood = 'default';
 
+/**
+ * 初始化场景、相机、渲染器和控制器
+ */
 function init() {
     // 场景
     scene = new THREE.Scene();
@@ -81,6 +84,9 @@ function init() {
     animate();
 }
 
+/**
+ * 初始化用户界面元素
+ */
 function initializeUI() {
     // 初始化统计信息
     updateMoodDisplay();
@@ -93,6 +99,10 @@ function initializeUI() {
     }
 }
 
+/**
+ * 创建粒子系统
+ * 根据当前心境设置粒子颜色和位置
+ */
 function createParticles() {
     if (particleSystem) {
         scene.remove(particleSystem);
@@ -133,12 +143,19 @@ function createParticles() {
     scene.add(particleSystem);
 }
 
+/**
+ * 窗口大小调整处理
+ */
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
+/**
+ * 心境切换处理
+ * @param {Event} event - 选择框变更事件
+ */
 function onMoodChange(event) {
     currentMood = event.target.value;
     const currentPalette = moodPalettes[currentMood];
@@ -158,6 +175,9 @@ function onMoodChange(event) {
     updateMoodDisplay();
 }
 
+/**
+ * 更新心境显示
+ */
 function updateMoodDisplay() {
     const moodNames = {
         'default': '默认',
@@ -171,6 +191,9 @@ function updateMoodDisplay() {
     }
 }
 
+/**
+ * 更新粒子数量显示
+ */
 function updateParticleCount() {
     const countElement = document.getElementById('particle-count');
     if (countElement) {
@@ -178,6 +201,10 @@ function updateParticleCount() {
     }
 }
 
+/**
+ * 更新FPS显示
+ * 根据帧率动态改变显示样式
+ */
 function updateFPS() {
     frameCount++;
     const currentTime = performance.now();
@@ -191,23 +218,33 @@ function updateFPS() {
         if (fpsElement) {
             fpsElement.textContent = fps;
             
-            // 根据FPS改变颜色
+            // 根据FPS改变颜色和样式类
+            fpsElement.classList.remove('low', 'medium');
             if (fps >= 50) {
                 fpsElement.style.color = '#00ff88';
             } else if (fps >= 30) {
                 fpsElement.style.color = '#ffaa00';
+                fpsElement.classList.add('medium');
             } else {
                 fpsElement.style.color = '#ff4444';
+                fpsElement.classList.add('low');
             }
         }
     }
 }
 
+/**
+ * 切换帮助提示
+ */
 function toggleHelp() {
     // 简单的帮助切换功能，可以扩展为更复杂的帮助系统
     console.log('帮助功能触发');
 }
 
+/**
+ * 生成动画
+ * 模拟动画生成过程并显示反馈
+ */
 function generateAnimation() {
     // 改进的动画生成逻辑
     console.log('生成动画...');
@@ -229,25 +266,54 @@ function generateAnimation() {
     }, 2000);
 }
 
+/**
+ * 显示通知消息
+ * @param {string} message - 要显示的消息
+ * @param {string} type - 消息类型: 'success', 'error', 'info'
+ */
 function showNotification(message, type = 'info') {
     // 创建通知元素
     const notification = document.createElement('div');
+    
+    const styles = {
+        success: {
+            background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.95) 0%, rgba(0, 200, 100, 0.9) 100%)',
+            shadow: '0 8px 32px rgba(0, 255, 136, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3)',
+            border: '1px solid rgba(255, 255, 255, 0.3)'
+        },
+        error: {
+            background: 'linear-gradient(135deg, rgba(255, 68, 68, 0.95) 0%, rgba(200, 40, 40, 0.9) 100%)',
+            shadow: '0 8px 32px rgba(255, 68, 68, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3)',
+            border: '1px solid rgba(255, 255, 255, 0.3)'
+        },
+        info: {
+            background: 'linear-gradient(135deg, rgba(120, 119, 198, 0.95) 0%, rgba(80, 80, 160, 0.9) 100%)',
+            shadow: '0 8px 32px rgba(120, 119, 198, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3)',
+            border: '1px solid rgba(255, 255, 255, 0.3)'
+        }
+    };
+    
+    const style = styles[type] || styles.info;
+    
     notification.style.cssText = `
         position: fixed;
         top: 20px;
         left: 50%;
-        transform: translateX(-50%);
-        padding: 15px 25px;
-        background: ${type === 'success' ? 'rgba(0, 255, 136, 0.9)' : 'rgba(120, 119, 198, 0.9)'};
+        transform: translateX(-50%) translateY(-30px);
+        padding: 16px 28px;
+        background: ${style.background};
         color: white;
-        border-radius: 10px;
-        font-size: 0.9em;
-        font-weight: 500;
+        border-radius: 16px;
+        border: ${style.border};
+        font-size: 0.95em;
+        font-weight: 600;
         z-index: 1000;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(15px) saturate(180%);
+        box-shadow: ${style.shadow};
         opacity: 0;
-        transition: all 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        letter-spacing: 0.02em;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     `;
     notification.textContent = message;
     
@@ -262,10 +328,12 @@ function showNotification(message, type = 'info') {
     // 自动移除
     setTimeout(() => {
         notification.style.opacity = '0';
-        notification.style.transform = 'translateX(-50%) translateY(-20px)';
+        notification.style.transform = 'translateX(-50%) translateY(-30px)';
         setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
+            if (notification.parentNode) {
+                document.body.removeChild(notification);
+            }
+        }, 400);
     }, 3000);
 }
 
@@ -273,11 +341,19 @@ let mouseX = 0, mouseY = 0;
 const windowHalfX = window.innerWidth / 2;
 const windowHalfY = window.innerHeight / 2;
 
+/**
+ * 鼠标移动处理
+ * @param {MouseEvent} event - 鼠标事件
+ */
 function onMouseMove(event) {
     mouseX = (event.clientX - windowHalfX) / 100;
     mouseY = (event.clientY - windowHalfY) / 100;
 }
 
+/**
+ * 粒子动画处理
+ * 根据心境和鼠标位置更新粒子位置
+ */
 function animateParticles() {
     if (particleSystem) {
         const time = Date.now() * 0.0005;
@@ -325,6 +401,9 @@ function animateParticles() {
     }
 }
 
+/**
+ * 主动画循环
+ */
 function animate() {
     requestAnimationFrame(animate);
     controls.update();
